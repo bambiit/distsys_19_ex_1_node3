@@ -5,16 +5,8 @@ PORT = 8003
 
 s = socket(AF_INET, SOCK_STREAM)
 
-s.bind((HOST, PORT))
-s.listen(1)
-
-while True:
-    (conn, addr) = s.accept()
-    data = conn.recv(1024)
-    if not data:
-        break
-    if "13" in data.decode():
-        conn.send(bytes("Not OK", "utf-8"))
-    else:
-        conn.send(bytes("OK", "utf-8"))
-conn.close()
+s.connect((HOST, PORT))
+s.send(bytes("Hello world 13", "utf-8"))
+data = s.recv(1024)
+print(data.decode())
+s.close()

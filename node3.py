@@ -4,6 +4,7 @@ import time
 
 HOST = '127.0.0.1'
 PORT = 8003
+fraud_db = ["111122223333444455", "987698769876987698"]
 
 s = socket(AF_INET, SOCK_STREAM)
 s.bind((HOST, PORT))
@@ -20,15 +21,17 @@ class ThreadedServer(threading.Thread):
             data = self.conn.recv(1024)
             if not data:
                 break
-            time.sleep(5)
-            if "13" in data.decode():
-                self.conn.send(bytes("Not OK", "utf-8"))
+            time.sleep(2)
+            if data.decode() in fraud_db:
+                res = "not ok"
             else:
-                self.conn.send(bytes("OK", "utf-8"))
+                res = "ok"
+            self.conn.send(bytes(res, "utf-8"))
 
 
+print("Server is running...")
 while True:
     (connection, addr) = s.accept()
-    print("Connection: ", connection)
+    print("Connection from {} has been established!".format(addr))
     newThread = ThreadedServer(connection)
     newThread.start()

@@ -22,7 +22,7 @@ class ThreadedServer(threading.Thread):
             if not data:
                 break
             time.sleep(2)
-            res = "not ok" if data.decode() in fraud_db else "ok"
+            res = "NOT OK" if data.decode() in fraud_db else "THIS BANK ACCOUNT IS IN THE DATABASE OF FRAUD"
             self.conn.send(bytes(res, "utf-8"))
 
 

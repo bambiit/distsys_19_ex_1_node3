@@ -1,6 +1,5 @@
 from socket import *
 import threading
-import time
 
 HOST = '127.0.0.1'
 PORT = 8003
@@ -21,8 +20,7 @@ class ThreadedServer(threading.Thread):
             data = self.conn.recv(1024)
             if not data:
                 break
-            time.sleep(2)
-            res = "NOT OK" if data.decode() in fraud_db else "THIS BANK ACCOUNT IS IN THE DATABASE OF FRAUD"
+            res = "THIS BANK ACCOUNT IS IN THE DATABASE OF FRAUD" if data.decode() in fraud_db else "OK"
             self.conn.send(bytes(res, "utf-8"))
 
 

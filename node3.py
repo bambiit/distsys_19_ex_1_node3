@@ -1,7 +1,7 @@
 from socket import *
 import threading
 
-HOST = '127.0.0.1'
+HOST = ''
 PORT = 8003
 fraud_db = ["111122223333444455", "987698769876987698"]
 
